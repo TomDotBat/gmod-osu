@@ -1,6 +1,7 @@
 
 --https://gist.github.com/theawesomecoder61/d2c3a3d42bbce809ca446a85b4dda754
 
+local setTexture = surface.SetTexture
 local setDrawColor = surface.SetDrawColor
 local drawPoly = surface.DrawPoly
 local abs = math.abs
@@ -11,18 +12,18 @@ local floor = math.floor
 local insert = table.insert
 local ipairs = ipairs
 
-function osu.precacheArc(cx, cy, radius, thickness, startang, endang, step)
+function osu.precacheArc(cx, cy, radius, thickness, startAng, endAng, step)
     local triarc = {}
 
-    if startang > endang then
+    if startAng > endAng then
         step = abs(step) * -1
     end
 
     local inner = {}
     local r = radius - thickness
 
-    for deg = startang, endang, step do
-        local radians = rad(startang)
+    for deg = startAng, endAng, step do
+        local radians = rad(startAng)
         local ox, oy = cx + (cos(radians) * r), cy + (-sin(radians) * r)
 
         insert(inner, {
@@ -35,8 +36,8 @@ function osu.precacheArc(cx, cy, radius, thickness, startang, endang, step)
 
     local outer = {}
 
-    for deg = startang, endang, step do
-        local radians = rad(startang)
+    for deg = startAng, endAng, step do
+        local radians = rad(startAng)
         local ox, oy = cx + (cos(radians) * radius), cy + (-sin(radians) * radius)
 
         insert(outer, {
@@ -70,7 +71,10 @@ function osu.drawArc(arc)
     end
 end
 
-function osu.drawUncachedArc(cx, cy, radius, thickness, startang, endang, roughness, color)
+local whiteMat = surface.GetTextureID("vgui/white")
+
+function osu.drawUncachedArc(cx, cy, radius, thickness, startAng, endAng, step, color)
+    setTexture(whiteMat)
     setDrawColor(color)
-    osu.drawArc(osu.precacheArc(cx, cy, radius, thickness, startang, endang, roughness))
+    osu.drawArc(osu.precacheArc(cx, cy, radius, thickness, startAng, endAng, step))
 end
