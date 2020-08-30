@@ -25,7 +25,9 @@ function osu.loadDirectory(dir)
     end
 end
 
-print([[       ________  _______  ____        ____  _____ __  __
+include("tom_osu/common/sh_logging.lua")
+
+osu.log([[       ________  _______  ____        ____  _____ __  __
   / ____/  |/  / __ \/ __ \      / __ \/ ___// / / /
  / / __/ /|_/ / / / / / / /_____/ / / /\__ \/ / / / 
 / /_/ / /  / / /_/ / /_/ /_____/ /_/ /___/ / /_/ /  
@@ -34,4 +36,4 @@ Loading GMod-osu! by Tom.bat]])
 
 osu.loadDirectory("tom_osu")
 
-print("GMod-osu! has finished loading!")
+osu.logSuccess("GMod-osu! has finished loading!")
