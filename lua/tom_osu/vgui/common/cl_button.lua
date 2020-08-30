@@ -1,15 +1,28 @@
 
-local PANEL = {} --I really hate the bulk of the DButton element so here's my much cleaner version
+local PANEL = {} --I really hate the bulk of the DButton element so here's my much cleaner version with support for circles
 
+AccessorFunc(PANEL, "bIsCircular", "IsCircular", FORCE_BOOL)
 AccessorFunc(PANEL, "bIsToggle", "IsToggle", FORCE_BOOL)
 AccessorFunc(PANEL, "bToggle", "Toggle", FORCE_BOOL)
 
 function PANEL:Init()
     self:SetIsToggle(false)
     self:SetToggle(false)
-    self:SetMouseInputEnabled(true)
+    self:SetIsCircular(false)
 
+    self:SetMouseInputEnabled(true)
     self:SetCursor("hand")
+end
+
+local sqrt = math.sqrt
+local min = math.min
+
+function PANEL:TestHover(x, y) --Taken from the wiki to save time :) - https://wiki.facepunch.com/gmod/PANEL:TestHover
+    if not self:GetIsCircular() then return end
+
+    x, y = self:ScreenToLocal(x, y)
+    local w, h = self:GetWide(), self:GetTall()
+    return (sqrt((x - w / 2) ^ 2 + (y - h / 2) ^ 2)) < min(w, h) / 2
 end
 
 function PANEL:DoToggle()
